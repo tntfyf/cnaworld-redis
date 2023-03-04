@@ -101,6 +101,7 @@ public class CnaRedisUtil{
 	 * @since 1.0.0
 	 * @param key   String
 	 * @param value V
+	 * @return V
 	 */
 	public static <V> V getAndSet(String key, V value) {
 		RBucket<V> bucket = redisson().getBucket(key);
@@ -117,6 +118,7 @@ public class CnaRedisUtil{
 	 * @param value V
 	 * @param time long 过期时间
 	 * @param timeUnit TimeUnit 时间单位
+	 * @return V
 	 */
 	public static <V> V getAndSet(String key, V value, long time, TimeUnit timeUnit) {
 		RBucket<V> bucket = redisson().getBucket(key);
@@ -131,6 +133,7 @@ public class CnaRedisUtil{
 	 * @param key String
 	 * @param oldValue V
 	 * @param value V
+	 * @return boolean
 	 */
 	public static <V> boolean compareAndSet(String key, V oldValue, V value) {
 		RBucket<V> bucket = redisson().getBucket(key);
@@ -144,6 +147,7 @@ public class CnaRedisUtil{
 	 * @since 1.0.0
 	 * @param key String
 	 * @param value V
+	 * @return boolean
 	 */
 	public static <V> boolean setIfAbsent(String key , V value) {
 		RBucket<V> bucket = redisson().getBucket(key);
@@ -158,6 +162,7 @@ public class CnaRedisUtil{
 	 * @param key String
 	 * @param value V
 	 * @param duration 有效期工具
+	 * @return boolean
 	 */
 	public static <V> boolean setIfAbsent(String key , V value, Duration duration) {
 		RBucket<V> bucket = redisson().getBucket(key);
@@ -171,6 +176,7 @@ public class CnaRedisUtil{
 	 * @since 1.0.0
 	 * @param key String
 	 * @param value V
+	 * @return boolean
 	 */
 	public static <V> boolean setIfExists(String key , V value) {
 		RBucket<V> bucket = redisson().getBucket(key);
@@ -186,6 +192,7 @@ public class CnaRedisUtil{
 	 * @param value V
 	 * @param time long 过期时间
 	 * @param timeUnit TimeUnit 时间单位
+	 * @return boolean
 	 */
 	public static <V> boolean setIfExists(String key ,V value, long time, TimeUnit timeUnit) {
 		RBucket<V> bucket = redisson().getBucket(key);
@@ -198,6 +205,7 @@ public class CnaRedisUtil{
 	 * @date 2023/2/10
 	 * @since 1.0.0
 	 * @param key String
+	 * @return V
 	 */
 	public static <V> V get(String key) {
 		RBucket<V> bucket = redisson().getBucket(key);
@@ -211,6 +219,7 @@ public class CnaRedisUtil{
 	 * @since 1.0.0
 	 * @param key String
 	 * @param duration 有效期工具
+	 * @return V
 	 */
 	public static <V> V getAndExpire(String key,Duration duration) {
 		RBucket<V> bucket = redisson().getBucket(key);
@@ -224,6 +233,7 @@ public class CnaRedisUtil{
 	 * @since 1.0.0
 	 * @param key String
 	 * @param instant 有效期工具
+	 * @return V
 	 */
 	public static <V> V getAndExpire(String key,Instant instant) {
 		RBucket<V> bucket = redisson().getBucket(key);
@@ -236,6 +246,7 @@ public class CnaRedisUtil{
 	 * @date 2023/2/10
 	 * @since 1.0.0
 	 * @param key String
+	 * @return V
 	 */
 	public static <V> V getAndClearExpire(String key) {
 		RBucket<V> bucket = redisson().getBucket(key);
@@ -248,6 +259,7 @@ public class CnaRedisUtil{
 	 * @date 2023/2/10
 	 * @since 1.0.0
 	 * @param key String
+	 * @return V
 	 */
 	public static <V> V getAndDelete(String key) {
 		RBucket<V> bucket = redisson().getBucket(key);
@@ -284,6 +296,7 @@ public class CnaRedisUtil{
 	 * @date 2023/2/10
 	 * @since 1.0.0
 	 * @param keys String
+	 * @return Map
 	 */
 	public static <V> Map<String, V> gets(String... keys) {
 		RBuckets buckets = redisson().getBuckets();
@@ -384,9 +397,9 @@ public class CnaRedisUtil{
 	 * @date 2023/2/10
 	 * @since 1.0.0
 	 * @param key String
-	 * @return RHyperLogLog<Integer>
+	 * @return RHyperLogLog
 	 */
-	public static RHyperLogLog<Integer> getHyperLogLog(String key) {
+	public static <V> RHyperLogLog<V> getHyperLogLog(String key) {
 		return redisson().getHyperLogLog(key);
 	}
 
@@ -411,7 +424,7 @@ public class CnaRedisUtil{
 	 * @date 2023/2/10
 	 * @since 1.0
 	 * @param key String
-	 * @return RMapCache<K, V>
+	 * @return RMapCache
 	 */
 	public static <K, V> RMapCache<K, V> getMapCache(String key) {
 		return redisson().getMapCache(key);
@@ -460,7 +473,7 @@ public class CnaRedisUtil{
 	 * @since 1.0
 	 * @param key String
 	 * @param localCachedMapOptions 本地缓存配置
-	 * @return RLocalCachedMap<K, V>
+	 * @return RLocalCachedMap
 	 */
 	public static <K, V> RLocalCachedMap<K, V> getLocalCachedMap(String key,LocalCachedMapOptions<K, V> localCachedMapOptions) {
 		return redisson().getLocalCachedMap(key,localCachedMapOptions);
@@ -474,9 +487,9 @@ public class CnaRedisUtil{
 	 * @date 2023/2/10
 	 * @since 1.0
 	 * @param key String
-	 * @return RMap<K, V>
+	 * @return RMap
 	 */
-	public static <K,V> RMap<K, V> getMap(String key) {
+	public static <K, V> RMap<K, V> getMap(String key) {
 		return redisson().getMap(key);
 	}
 
@@ -491,7 +504,7 @@ public class CnaRedisUtil{
 	 * @date 2023/2/10
 	 * @since 1.0
 	 * @param key String
-	 * @return RSetMultimap<K, V>
+	 * @return RSetMultimap
 	 */
 	public static <K,V> RSetMultimap<K, V> getSetMultimap(String key) {
 		return redisson().getSetMultimap(key);
@@ -507,7 +520,7 @@ public class CnaRedisUtil{
 	 * @date 2023/2/10
 	 * @since 1.0
 	 * @param key String
-	 * @return RListMultimap<K, V>
+	 * @return RListMultimap
 	 */
 	public static <K,V> RListMultimap<K, V> getListMultimap(String key) {
 		return redisson().getListMultimap(key);
@@ -521,7 +534,7 @@ public class CnaRedisUtil{
 	 * @date 2023/2/10
 	 * @since 1.0
 	 * @param key String
-	 * @return RSet<V>
+	 * @return RSet
 	 */
 	public static <V> RSet<V> getSet(String key) {
 		return redisson().getSet(key);
@@ -535,7 +548,7 @@ public class CnaRedisUtil{
 	 * @date 2023/2/10
 	 * @since 1.0
 	 * @param key String
-	 * @return RSortedSet<V>
+	 * @return RSortedSet
 	 */
 	public static <V> RSortedSet<V> getSortedSet(String key) {
 		return redisson().getSortedSet(key);
@@ -548,7 +561,7 @@ public class CnaRedisUtil{
 	 * @date 2023/2/10
 	 * @since 1.0
 	 * @param key String
-	 * @return RScoredSortedSet<V>
+	 * @return RScoredSortedSet
 	 */
 	public static <V> RScoredSortedSet<V> getScoredSortedSet(String key) {
 		return redisson().getScoredSortedSet(key);
@@ -561,7 +574,7 @@ public class CnaRedisUtil{
 	 * @date 2023/2/10
 	 * @since 1.0
 	 * @param key String
-	 * @return RScoredSortedSet<V>
+	 * @return RScoredSortedSet
 	 */
 	public static RLexSortedSet getLexSortedSet(String key) {
 		return redisson().getLexSortedSet(key);
@@ -574,7 +587,7 @@ public class CnaRedisUtil{
 	 * @date 2023/2/10
 	 * @since 1.0
 	 * @param key String
-	 * @return RList<V>
+	 * @return RList
 	 */
 	public static <V> RList<V> getList(String key) {
 		return redisson().getList(key);
@@ -586,7 +599,7 @@ public class CnaRedisUtil{
 	 * @date 2023/2/10
 	 * @since 1.0
 	 * @param key String
-	 * @return RQueue<V>
+	 * @return RQueue
 	 */
 	public static <V> RQueue<V> getQueue(String key) {
 		return redisson().getQueue(key);
@@ -598,7 +611,7 @@ public class CnaRedisUtil{
 	 * @date 2023/2/10
 	 * @since 1.0
 	 * @param key String
-	 * @return RDeque<V>
+	 * @return RDeque
 	 */
 	public static <V> RDeque<V> getDeque(String key) {
 		return redisson().getDeque(key);
@@ -611,7 +624,7 @@ public class CnaRedisUtil{
 	 * @date 2023/2/10
 	 * @since 1.0
 	 * @param key String
-	 * @return RBlockingQueue<V>
+	 * @return RBlockingQueue
 	 */
 	public static <V> RBlockingQueue<V> getBlockingQueue(String key) {
 		return redisson().getBlockingQueue(key);
@@ -625,7 +638,7 @@ public class CnaRedisUtil{
 	 * @date 2023/2/10
 	 * @since 1.0
 	 * @param key String
-	 * @return RBoundedBlockingQueue<V>
+	 * @return RBoundedBlockingQueue
 	 */
 	public static <V> RBoundedBlockingQueue<V> getBoundedBlockingQueue(String key) {
 		return redisson().getBoundedBlockingQueue(key);
@@ -639,7 +652,7 @@ public class CnaRedisUtil{
 	 * @date 2023/2/10
 	 * @since 1.0
 	 * @param key String
-	 * @return RBlockingDeque<V>
+	 * @return RBlockingDeque
 	 */
 	public static <V> RBlockingDeque<V> getBlockingDeque(String key) {
 		return redisson().getBlockingDeque(key);
@@ -654,7 +667,7 @@ public class CnaRedisUtil{
 	 * @date 2023/2/10
 	 * @since 1.0
 	 * @param rQueue RQueue
-	 * @return RDelayedQueue<V>
+	 * @return RDelayedQueue
 	 */
 	public static <V> RDelayedQueue<V> getDelayedQueue(RQueue<V> rQueue) {
 		return redisson().getDelayedQueue(rQueue);
@@ -668,7 +681,7 @@ public class CnaRedisUtil{
 	 * @date 2023/2/10
 	 * @since 1.0
 	 * @param key String
-	 * @return RPriorityQueue<V>
+	 * @return RPriorityQueue
 	 */
 	public static <V> RPriorityQueue<V> getPriorityQueue(String key) {
 		return redisson().getPriorityQueue(key);
@@ -682,7 +695,7 @@ public class CnaRedisUtil{
 	 * @date 2023/2/10
 	 * @since 1.0
 	 * @param key String
-	 * @return RPriorityDeque<V>
+	 * @return RPriorityDeque
 	 */
 	public static <V> RPriorityDeque<V> getPriorityDeque(String key) {
 		return redisson().getPriorityDeque(key);
@@ -697,7 +710,7 @@ public class CnaRedisUtil{
 	 * @date 2023/2/10
 	 * @since 1.0
 	 * @param key String
-	 * @return RPriorityBlockingQueue<V>
+	 * @return RPriorityBlockingQueue
 	 */
 	public static <V> RPriorityBlockingQueue<V> getPriorityBlockingQueue(String key) {
 		return redisson().getPriorityBlockingQueue(key);
@@ -712,7 +725,7 @@ public class CnaRedisUtil{
 	 * @date 2023/2/10
 	 * @since 1.0
 	 * @param key String
-	 * @return RPriorityBlockingDeque<V>
+	 * @return RPriorityBlockingDeque
 	 */
 	public static <V> RPriorityBlockingDeque<V> getPriorityBlockingDeque(String key) {
 		return redisson().getPriorityBlockingDeque(key);
@@ -892,7 +905,7 @@ public class CnaRedisUtil{
 	 * @date 2023/2/10
 	 * @since 1.0
 	 * @param key String
-	 * @return RBloomFilter<V>
+	 * @return RBloomFilter
 	 */
 	public static <V> RBloomFilter<V> getBloomFilter(String key) {
 		RBloomFilter<V> bloomFilter = redisson().getBloomFilter(key);
@@ -907,7 +920,7 @@ public class CnaRedisUtil{
 	 * @date 2023/2/10
 	 * @since 1.0
 	 * @param key String
-	 * @return RBloomFilter<V>
+	 * @return RBloomFilter
 	 */
 	public static <V> RBloomFilter<V> getBloomFilter(String key,long expectedInsertions, double falseProbability) {
 		RBloomFilter<V> bloomFilter = redisson().getBloomFilter(key);
@@ -923,8 +936,7 @@ public class CnaRedisUtil{
 	 * @return keys
 	 */
 	public static RKeys getKeys() {
-		RKeys keys = redisson().getKeys();
-		return keys;
+		return redisson().getKeys();
 	}
 
 }
