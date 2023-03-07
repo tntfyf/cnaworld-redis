@@ -16,4 +16,4 @@ import org.springframework.context.annotation.Import;
 @Configuration
 @EnableConfigurationProperties({CnaworldRedisProperties.class})
 @Import(value = {CnaRedisUtil.class, RedissonConfig.class})
-public class AutoWiredConfig {}
+public class CnaRedisAutoWiredConfig {}
