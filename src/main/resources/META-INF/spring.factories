@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  cn.cnaworld.framework.infrastructure.config.AutoWiredConfig
+  cn.cnaworld.framework.infrastructure.config.CnaRedisAutoWiredConfig

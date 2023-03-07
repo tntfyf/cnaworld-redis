@@ -224,3 +224,12 @@
    }
    
    ```
+
+8、补充
+
+开关关闭后若出现异常可同步关闭检测
+
+management:
+  health:
+    redis:
+      enabled: false
