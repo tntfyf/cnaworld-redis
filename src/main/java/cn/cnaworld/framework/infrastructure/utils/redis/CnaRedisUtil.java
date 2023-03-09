@@ -1,4 +1,4 @@
-package cn.cnaworld.framework.infrastructure.common.utils.redis;
+package cn.cnaworld.framework.infrastructure.utils.redis;
 
 import lombok.extern.slf4j.Slf4j;
 import org.redisson.RedissonMultiLock;
@@ -65,6 +65,18 @@ public class CnaRedisUtil{
 			log.info("CnaRedisUtil  initialized ！");
 		}
     }
+
+
+	/**
+	 * CnaRedisUtil 是否可用
+	 * @author Lucifer
+	 * @date 2023/3/8
+	 * @since 1.0.2
+	 * @return boolean
+	 */
+	public static boolean enable() {
+		return redisson != null;
+	}
 
 	/**
 	 * 设置值

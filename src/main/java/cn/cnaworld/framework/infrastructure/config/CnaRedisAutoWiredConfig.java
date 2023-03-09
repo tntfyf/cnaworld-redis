@@ -1,8 +1,8 @@
 package cn.cnaworld.framework.infrastructure.config;
 
-import cn.cnaworld.framework.infrastructure.common.utils.redis.CnaRedisUtil;
 import cn.cnaworld.framework.infrastructure.config.redisson.RedissonConfig;
 import cn.cnaworld.framework.infrastructure.properties.CnaworldRedisProperties;
+import cn.cnaworld.framework.infrastructure.utils.redis.CnaRedisUtil;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
