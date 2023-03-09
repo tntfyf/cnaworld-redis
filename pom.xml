@@ -28,7 +28,7 @@
 	</licenses>
 
 	<scm>
-		<connection>https://github.com/tntfyf/cnaworld-redis</connection>
+		<connection>https://github.com/tntfyf/cnaworld-redis.git</connection>
 		<url>https://github.com/tntfyf/cnaworld-redis</url>
 	</scm>
 
