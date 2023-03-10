@@ -15,25 +15,12 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @Getter
 @Setter
 @ToString
-@ConfigurationProperties(prefix="cnaworld")
+@ConfigurationProperties(prefix="cnaworld.redis")
 public class CnaworldRedisProperties {
 
-    private RedisProperties redis;
-
     /**
-     * redis配置
-     * @author Lucifer
-     * @date 2023/1/30
-     * @since 1.0
+     * 默认实现开关
      */
-    @Getter
-    @Setter
-    @ToString
-    public static class RedisProperties {
-        /**
-         * 默认实现开关
-         */
-        private boolean enable = true;
-    }
+    private boolean enable = true;
 
 }
