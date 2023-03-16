@@ -1,5 +1,5 @@
 # Spring boot 快速实现 分布式缓存 分布式锁
-## 1.0.3版本 
+## 1.0.4版本 
 
 作用：
 1. 提供静态工具类CnaRedisUtil ，提供分布式数据结构及分布式锁静态实现，使其API更接近redis,从而让使用者能够将精力更集中地放在处理业务逻辑上。而不必学习过多的新概念。
@@ -22,7 +22,7 @@
    <dependency>
        <groupId>cn.cnaworld.framework</groupId>
        <artifactId>redis</artifactId>
-       <version>1.0.3</version>
+       <version>1.0.4</version>
    </dependency>
    ```
 
