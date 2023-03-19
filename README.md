@@ -4,7 +4,7 @@
 作用：
 1. 提供静态工具类CnaRedisUtil ，提供分布式数据结构及分布式锁静态实现，使其API更接近redis,从而让使用者能够将精力更集中地放在处理业务逻辑上。而不必学习过多的新概念。
 
-2. 提供分布式锁注解 CnaRedisLock , 配置在方法上可自动获取方法入参拼接成分布式锁
+2. 提供分布式锁注解 @CnaRedisLock , 配置在方法上可自动获取方法入参拼接成分布式锁
 
 3. 底层采用 redisson ，方法上对特有概念做出注释及使用场景介绍。redisson是一个在Redis的基础上实现的Java驻内存数据网格（In-Memory Data Grid）。它不仅提供了一系列的分布式的Java常用对象，还提供了许多分布式服务。其中包括(`BitSet`, `Set`, `Multimap`, `SortedSet`, `Map`, `List`, `Queue`, `BlockingQueue`, `Deque`, `BlockingDeque`, `Semaphore`, `Lock`, `AtomicLong`, `CountDownLatch`, `Publish / Subscribe`, `Bloom filter`, `Remote service`, `Spring cache`, `Executor service`, `Live Object service`, `Scheduler service`) Redisson提供了使用Redis的最简单和最便捷的方法。
 
@@ -12,7 +12,7 @@
 
    具体介绍请移步官网[Redisson](https://github.com/redisson/redisson/wiki/Redisson%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D)
 
-4. CnaRedisUtil 、CnaRedisLock 及 redisson 客户端实例是否加载受 cnaworld.redis.enable 开关影响，默认开启，false关闭加载。
+4. CnaRedisUtil 、@CnaRedisLock 及 redisson 客户端实例是否加载受 cnaworld.redis.enable 开关影响，默认开启，false关闭加载。
 
 
 5. CnaRedisUtil 提供了`Redisson`、`RedissonReactive和`RedissonRx`实例本身和Redisson提供的所有分布式对象都是线程安全的。RedissonReactive和RedissonRx为响应式异步调用。
