@@ -63,7 +63,7 @@ public class RedisLockInterceptor implements MethodInterceptor {
         try {
             annotation.exceptionCallBack().newInstance().callback(declaringName, redisKey,action, e);
         } catch (InstantiationException | IllegalAccessException ex) {
-            log.error("方法：{} , redisKey ：{} ,分布式锁定 , 异常处理回调实例化异常" , declaringName, redisKey, ex,e);
+            CnaLogUtil.error(log,"方法：{} , redisKey ：{} ,分布式锁定 , 异常处理回调实例化异常" , declaringName, redisKey, ex,e);
         }
     }
 
