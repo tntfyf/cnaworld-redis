@@ -1,20 +1,23 @@
 # Spring boot 快速实现 分布式缓存 分布式锁
-## 1.0.4版本 
+## 1.0.5版本 
 
 作用：
 1. 提供静态工具类CnaRedisUtil ，提供分布式数据结构及分布式锁静态实现，使其API更接近redis,从而让使用者能够将精力更集中地放在处理业务逻辑上。而不必学习过多的新概念。
 
-2. 底层采用 redisson ，方法上对特有概念做出注释及使用场景介绍。redisson是一个在Redis的基础上实现的Java驻内存数据网格（In-Memory Data Grid）。它不仅提供了一系列的分布式的Java常用对象，还提供了许多分布式服务。其中包括(`BitSet`, `Set`, `Multimap`, `SortedSet`, `Map`, `List`, `Queue`, `BlockingQueue`, `Deque`, `BlockingDeque`, `Semaphore`, `Lock`, `AtomicLong`, `CountDownLatch`, `Publish / Subscribe`, `Bloom filter`, `Remote service`, `Spring cache`, `Executor service`, `Live Object service`, `Scheduler service`) Redisson提供了使用Redis的最简单和最便捷的方法。
+2. 提供分布式锁注解 @CnaRedisLock , 配置在方法上可自动获取方法入参拼接成分布式锁
+
+3. 底层采用 redisson ，方法上对特有概念做出注释及使用场景介绍。redisson是一个在Redis的基础上实现的Java驻内存数据网格（In-Memory Data Grid）。它不仅提供了一系列的分布式的Java常用对象，还提供了许多分布式服务。其中包括(`BitSet`, `Set`, `Multimap`, `SortedSet`, `Map`, `List`, `Queue`, `BlockingQueue`, `Deque`, `BlockingDeque`, `Semaphore`, `Lock`, `AtomicLong`, `CountDownLatch`, `Publish / Subscribe`, `Bloom filter`, `Remote service`, `Spring cache`, `Executor service`, `Live Object service`, `Scheduler service`) Redisson提供了使用Redis的最简单和最便捷的方法。
 
    Redisson底层采用的是[Netty](http://netty.io/) 框架。支持[Redis](http://redis.cn) 2.8以上版本，支持Java1.6+以上版本。
 
    具体介绍请移步官网[Redisson](https://github.com/redisson/redisson/wiki/Redisson%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D)
 
-3. CnaRedisUtil 及 redisson 客户端实例是否加载受 cnaworld.redis.enable 开关影响，默认开启，false关闭加载。
+4. CnaRedisUtil 、@CnaRedisLock 及 redisson 客户端实例是否加载受 cnaworld.redis.enable 开关影响，默认开启，false关闭加载。
 
-4. CnaRedisUtil 提供了`Redisson`、`RedissonReactive和`RedissonRx`实例本身和Redisson提供的所有分布式对象都是线程安全的。RedissonReactive和RedissonRx为响应式异步调用。
 
-5. 客户端配置
+5. CnaRedisUtil 提供了`Redisson`、`RedissonReactive和`RedissonRx`实例本身和Redisson提供的所有分布式对象都是线程安全的。RedissonReactive和RedissonRx为响应式异步调用。
+
+6. 客户端配置
 
    pom.xml 引入依赖
 
@@ -22,7 +25,7 @@
    <dependency>
        <groupId>cn.cnaworld.framework</groupId>
        <artifactId>redis</artifactId>
-       <version>1.0.4</version>
+       <version>1.0.5</version>
    </dependency>
    ```
 
@@ -97,7 +100,7 @@
 
    https://github.com/redisson/redisson/wiki/2.-Configuration
 
-6. 项目启动时进行注册
+7. 项目启动时进行注册
 
    ```lua
    2023-03-04 15:24:34.561  INFO 27988 --- [           main] org.redisson.Version                     : Redisson 3.18.1
@@ -106,7 +109,7 @@
    2023-03-04 15:24:35.496  INFO 27988 --- [           main] c.c.f.i.common.utils.redis.CnaRedisUtil  : CnaRedisUtil  initialized ！
    ```
 
-7. 调用方式
+8. 调用方式
 
    [官网使用方式](https://github.com/redisson/redisson/wiki/6.-distributed-objects)
 
@@ -225,8 +228,46 @@
    
    ```
 
-8、补充
+9、@CnaRedisLock  使用方式
+
+```java
+    @ApiOperation("查询学生列表")
+    @GetMapping("/list")
+    @CnaRedisLock(key = "静态值",prefix = "前缀",lockType = LockType.Lock,paramsAsKey = {"studentId","studentNameAndAge"},sync = true,waitTime = 10,timeUnit = TimeUnit.SECONDS,exceptionCallBack = ExceptionCallBack.class)
+    public ResponseResult<List<Student>> list(@RequestParam(required = false) String studentId, @RequestParam(required = false) String studentName) {}
+
+//注解说明：影响分布式锁key拼接的字段有
+//1、String prefix ：前缀
+//2、String key ：静态值
+//3、String[] paramsAsKey ：方法参数作为key的数组
+//规则：
+//1、若存在prefix，自动拼接到最前方。
+//2、若存在key则忽略paramsAsKey，单以prefix+key 作为分布式key。
+//3、若key未配置，则根据paramsAsKey中配置的参数名称与方法参数名称做匹配，例如studentId匹配到@RequestParam String studentId，但是studentNameAndAge 未匹配上@RequestParam String studentName。则只使用prefix+studentId的实际入参作为分布式Key。注意参数为空则拼接null。支持引用对象，但是引用对象需要重写object的toString方法，提供出可支持幂等操作的值。
+
+//锁类型：
+//1、Lock：单节点的分布式重入锁 Reentrant
+//2、FairLock ：单节点的分布式公平可重入锁 Reentrant
+//3、集群模式下的红锁和联锁有时间会参考redisson pro源码提供
+
+//阻塞
+//1、sync 默认为true, 阻塞等待获取锁 ， 默认仅阻塞等待10S ， 若10S还未获取到锁则进入加锁失败处理
+//2、可使用waitTime 和 timeUnit 控制最大阻塞等待时间。waitTime 可配置为-1 启动无上限阻塞等待直到获取到锁为止
+//3、sync 配置为false时，会尝试获取一次锁，若获取失败，则直接进入加锁失败处理
+
+//加锁失败处理
+//exceptionCallBack 默认实现为ExceptionCallBack.class。具体实现是打印失败日志。
+//log.error("方法全限定名：{} , redisKey ：{} , 动作 : {} ,分布式锁定失败" , declaringName, redisKey,action,e);
+//可继承ExceptionCallBack此类并提供客户端实现。
+
+//注意：
+//若出现了网络原因等未知因素导致加锁失败，解锁失败，由业务自行使用失败处理回调判断是抛出异常终止业务还是，继续执行业务。
+//若注释的是Controller方法，想要处理http返回信息可在失败处理回调中，抛出自定义异常，交由全局异常捕获器处理。也可通过上下文对象获取request对象处理返回信息封装。
+```
+
+10、补充
 开关关闭后若出现异常可同步关闭检测
+
    ```yaml
 management:
   health:
