@@ -1,5 +1,6 @@
 package cn.cnaworld.framework.infrastructure.utils.redis;
 
+import cn.cnaworld.framework.infrastructure.utils.CnaLogUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.redisson.RedissonMultiLock;
 import org.redisson.RedissonRedLock;
@@ -57,12 +58,12 @@ public class CnaRedisUtil{
     @PostConstruct
     private void init() {
 		if (redissonClient == null || redissonReactiveClient == null || redissonRxClient == null){
-			log.warn("CnaRedisUtil 加载失败！");
+			CnaLogUtil.warn(log,"CnaRedisUtil 加载失败！");
 		}else {
 			redisson=redissonClient;
 			redissonReactive=redissonReactiveClient;
 			redissonRx=redissonRxClient;
-			log.info("CnaRedisUtil  initialized ！");
+			CnaLogUtil.info(log,"CnaRedisUtil 加载失败！");
 		}
     }
 

@@ -1,6 +1,7 @@
 package cn.cnaworld.framework.infrastructure.common;
 
 import cn.cnaworld.framework.infrastructure.annotation.CnaRedisLock;
+import cn.cnaworld.framework.infrastructure.utils.CnaLogUtil;
 import cn.cnaworld.framework.infrastructure.utils.redis.CnaRedisUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.aopalliance.intercept.MethodInterceptor;
@@ -50,9 +51,7 @@ public class RedisLockInterceptor implements MethodInterceptor {
         } finally {
             try {
                 lock.unlock();
-                if (log.isDebugEnabled()) {
-                    log.debug("方法：{} , redisKey ：{} ,解除锁定成功 " ,declaringName, redisKey);
-                }
+                CnaLogUtil.debug(log,"方法：{} , redisKey ：{} ,解除锁定成功 " ,declaringName, redisKey);
             }catch (Exception e) {
                 extractedCallBack(declaringName, annotation, redisKey,"unlock",e);
             }
@@ -64,7 +63,7 @@ public class RedisLockInterceptor implements MethodInterceptor {
         try {
             annotation.exceptionCallBack().newInstance().callback(declaringName, redisKey,action, e);
         } catch (InstantiationException | IllegalAccessException ex) {
-            log.error("方法：{} , redisKey ：{} ,分布式锁定 , 异常处理回调实例化异常" , declaringName, redisKey, ex,e);
+            CnaLogUtil.error(log,"方法：{} , redisKey ：{} ,分布式锁定 , 异常处理回调实例化异常" , declaringName, redisKey, ex,e);
         }
     }
 
@@ -179,9 +178,7 @@ public class RedisLockInterceptor implements MethodInterceptor {
         boolean result;
         //根据加锁情况处理后续操作
         if (tryLock) {
-            if (log.isDebugEnabled()) {
-                log.debug("方法：{} , redisKey ：{} ,分布式锁定成功 " , declaringName, redisKey);
-            }
+            CnaLogUtil.debug(log,"方法：{} , redisKey ：{} ,分布式锁定成功 " , declaringName, redisKey);
             result=true;
         }else {
             result=false;

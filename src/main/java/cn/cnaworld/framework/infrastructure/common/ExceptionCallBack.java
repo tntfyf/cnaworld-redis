@@ -1,5 +1,6 @@
 package cn.cnaworld.framework.infrastructure.common;
 
+import cn.cnaworld.framework.infrastructure.utils.CnaLogUtil;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -18,6 +19,6 @@ public class ExceptionCallBack {
      * @since 1.0.0
      */
     public void callback(String declaringName,String redisKey,String action,Exception e){
-        log.error("方法：{} , redisKey ：{} ,动作 : {} ,分布式锁定失败" , declaringName, redisKey,action,e);
+        CnaLogUtil.error(log,"方法：{} , redisKey ：{} ,动作 : {} ,分布式锁定失败" , declaringName, redisKey,action,e);
     }
 }
