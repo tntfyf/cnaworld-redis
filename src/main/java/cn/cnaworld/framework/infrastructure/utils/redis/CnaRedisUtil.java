@@ -63,7 +63,7 @@ public class CnaRedisUtil{
 			redisson=redissonClient;
 			redissonReactive=redissonReactiveClient;
 			redissonRx=redissonRxClient;
-			CnaLogUtil.info(log,"CnaRedisUtil 加载失败！");
+			CnaLogUtil.info(log,"CnaRedisUtil initialized！");
 		}
     }
 
