@@ -228,7 +228,7 @@
    
    ```
 
-9、CnaRedisLock  使用方式
+9、@CnaRedisLock  使用方式
 
 ```java
     @ApiOperation("查询学生列表")
