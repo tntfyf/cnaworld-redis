@@ -1,6 +1,6 @@
 package cn.cnaworld.framework.infrastructure.utils.redis;
 
-import cn.cnaworld.framework.infrastructure.utils.CnaLogUtil;
+import cn.cnaworld.framework.infrastructure.utils.log.CnaLogUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.redisson.RedissonMultiLock;
 import org.redisson.RedissonRedLock;
@@ -41,29 +41,29 @@ public class CnaRedisUtil{
 	private static RedissonRxClient redissonRx;
 
 	public static RedissonClient redisson() {
-		Assert.notNull(redisson,"redisson 加载失败!");
+		Assert.notNull(redisson,"redisson 加载失败");
 		return redisson;
 	}
 
 	public static RedissonReactiveClient redissonReactive() {
-		Assert.notNull(redisson,"redisson 加载失败!");
+		Assert.notNull(redisson,"redisson 加载失败");
 		return redissonReactive;
 	}
 
 	public static RedissonRxClient redissonRx() {
-		Assert.notNull(redisson,"redisson 加载失败!");
+		Assert.notNull(redisson,"redisson 加载失败");
 		return redissonRx;
 	}
 
     @PostConstruct
     private void init() {
 		if (redissonClient == null || redissonReactiveClient == null || redissonRxClient == null){
-			CnaLogUtil.warn(log,"CnaRedisUtil 加载失败！");
+			CnaLogUtil.warn(log,"CnaRedisUtil 加载失败");
 		}else {
 			redisson=redissonClient;
 			redissonReactive=redissonReactiveClient;
 			redissonRx=redissonRxClient;
-			CnaLogUtil.info(log,"CnaRedisUtil initialized！");
+			CnaLogUtil.info(log,"CnaRedisUtil initialized");
 		}
     }
 
