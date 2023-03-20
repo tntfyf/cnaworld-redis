@@ -12,6 +12,7 @@
 	<properties>
 		<java.version>1.8</java.version>
 		<cnaworld.core.version>1.1.0</cnaworld.core.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
 	<licenses>
