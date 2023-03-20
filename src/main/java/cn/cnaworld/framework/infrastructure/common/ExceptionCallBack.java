@@ -1,6 +1,6 @@
 package cn.cnaworld.framework.infrastructure.common;
 
-import cn.cnaworld.framework.infrastructure.utils.CnaLogUtil;
+import cn.cnaworld.framework.infrastructure.utils.log.CnaLogUtil;
 import lombok.extern.slf4j.Slf4j;
 
 /**
