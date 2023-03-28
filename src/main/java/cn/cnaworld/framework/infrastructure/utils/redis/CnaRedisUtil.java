@@ -317,6 +317,19 @@ public class CnaRedisUtil{
 	}
 
 	/**
+	 * 移除Key
+	 * @author Lucifer
+	 * @date 2023/2/10
+	 * @since 1.0.0
+	 * @param key String
+	 * @return boolean
+	 */
+	public static <V> boolean delete(String key) {
+		RBucket<V> bucket = redisson().getBucket(key);
+		return bucket.delete();
+	}
+
+	/**
 	 * 获取可操作BitSet , 二进制位图 ， 可对对应的二进制位设置true 或者 false
 	 * @author Lucifer
 	 * @date 2023/2/10
