@@ -57,7 +57,7 @@ public @interface CnaRedisLock {
     TimeUnit timeUnit ()default TimeUnit.SECONDS;
 
     /**
-     * 时间单位
+     * 异常处理器
      */
     Class<? extends ExceptionCallBack> exceptionCallBack() default ExceptionCallBack.class;
 
