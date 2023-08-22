@@ -4,14 +4,14 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>cn.cnaworld.framework</groupId>
 	<artifactId>redis</artifactId>
-	<version>1.1.3</version>
+	<version>1.1.4</version>
 	<name>cnaworld-redis</name>
 	<description>cnaworld-redis</description>
 	<url>https://github.com/tntfyf/cnaworld-redis</url>
 	<packaging>jar</packaging>
 	<properties>
 		<java.version>1.8</java.version>
-		<cnaworld.core.version>1.1.3</cnaworld.core.version>
+		<cnaworld.core.version>${version}</cnaworld.core.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
@@ -108,6 +108,12 @@
 			<groupId>com.alibaba</groupId>
 			<artifactId>fastjson</artifactId>
 			<version>1.2.83</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>cn.cnaworld.framework</groupId>
+			<artifactId>core</artifactId>
+			<version>1.1.3</version>
 			<scope>compile</scope>
 		</dependency>
 
